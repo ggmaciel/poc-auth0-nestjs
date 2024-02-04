@@ -35,4 +35,20 @@ export class SqlUserRepository implements UserRepository {
       throw Error('Something went wrong...');
     }
   }
+
+  async findById(id: number): Promise<User> {
+    const query = 'SELECT * FROM users WHERE id = :id';
+    const [user] = await this.sequelize.query<User>(query, {
+      replacements: {id},
+      type: QueryTypes.SELECT,
+    });
+
+    if (!user) {
+      const message = 'User not found'
+      console.error(message)
+      throw Error(message)
+    }
+
+    return user
+  }
 }

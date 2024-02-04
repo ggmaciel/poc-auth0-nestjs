@@ -14,4 +14,9 @@ export class UsersService {
   async create(user: User) {
     await this.userRepository.create(user)
   }
+
+
+  async findById(id: number): Promise<User> {
+    return await this.userRepository.findById(id)
+  }
 }
