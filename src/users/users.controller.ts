@@ -15,21 +15,16 @@ export class UsersController {
     async findAll(): Promise<Users> {
         return this.usersService.findAll()
     }
-
-    @Get(':id')
-    async find(@Param('id') id: number): Promise<User> {
-      return this.usersService.find(id);
+    
+    // TODO
+    @Get()
+    async findById(): Promise<void> {
     }
 
+    // TODO
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Roles('admin')
     @Post()
     async create(@Body() user: User): Promise<void> {
-      this.usersService.create(user);
-    }
-
-    @Delete(':id')
-    async delete(@Param('id') id: number): Promise<void> {
-      this.usersService.delete(id);
     }
 }

@@ -1,58 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { Users } from './users';
+import { Inject, Injectable } from '@nestjs/common';
 import { User } from './user';
+import { UserRepository } from './user-repository.interface';
 
 @Injectable()
 export class UsersService {
-    private readonly users: Users = {
-        1: {
-            id: 1,
-            name: 'João',
-            email: 'joão@email.com'
-        },
-        2: {
-            id: 2,
-            name: 'Maria',
-            email: 'maria@email.com'
-        },
-        3: {
-            id: 3,
-            name: 'Silva',
-            email: 'silva@email.com'
-        }
-    }
+  constructor(@Inject('USER_REPOSITORY') private readonly userRepository: UserRepository) {}
 
-    findAll(): Users {
-        return this.users
-    }
-
-    create(newItem: User): void {
-        const id = new Date().valueOf();
-
-        this.users[id] = {
-          ...newItem,
-          id,
-        };
-    }
-
-    find(id: number): User {
-        const record: User = this.users[id];
-    
-        if (record) {
-          return record;
-        }
-    
-        throw new Error('No record found');
-    }
-
-    delete(id: number):void {
-        const record: User = this.users[id];
-    
-        if (record) {
-          delete this.users[id];
-          return;
-        }
-    
-        throw new Error('No record found to delete');
-      }
+  async findAll(): Promise<User[]> {
+    const users = await this.userRepository.findAll()
+    return users
+  }
 }
