@@ -13,7 +13,7 @@ export class UsersController {
 
     @Get()
     async findAll(): Promise<Users> {
-        return this.usersService.findAll()
+        return await this.usersService.findAll()
     }
     
     // TODO
@@ -21,10 +21,10 @@ export class UsersController {
     async findById(): Promise<void> {
     }
 
-    // TODO
     @UseGuards(AuthGuard('jwt'), RolesGuard)
     @Roles('admin')
     @Post()
     async create(@Body() user: User): Promise<void> {
+        await this.usersService.create(user)
     }
 }

@@ -10,4 +10,8 @@ export class UsersService {
     const users = await this.userRepository.findAll()
     return users
   }
+
+  async create(user: User) {
+    await this.userRepository.create(user)
+  }
 }
